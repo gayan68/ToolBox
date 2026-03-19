@@ -339,9 +339,9 @@ def compute_bayes_map_gpu(
             fp[i] = 1.0
             continue
 
-        ious, bayes = iou_one_to_all(box, boxes_gt)  # (n_gt,)
+        ious, bayes_score = iou_one_to_all(box, boxes_gt)  # (n_gt,)
         best_iou, best_idx = torch.max(ious, dim=0)
-        matched_bayes = bayes[best_idx]
+        matched_bayes = bayes_score[best_idx]
 
         if bayes:
             best_new_score = (best_iou + matched_bayes) / 2.0  # simple average of IoU and Bayes
